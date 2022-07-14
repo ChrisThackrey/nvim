@@ -57,7 +57,7 @@ return packer.startup(function(use)
   use "christianchiarulli/hop.nvim"
   -- use "phaazon/hop.nvim"
   -- Lua
-  -- use "kylechui/nvim-surround"
+  use "kylechui/nvim-surround"
   -- Lua
   use {
     "abecodes/tabout.nvim",
@@ -85,7 +85,11 @@ return packer.startup(function(use)
   -- UI
   use "stevearc/dressing.nvim"
   use "ghillb/cybu.nvim"
-  use { "christianchiarulli/nvim-gps", branch = "text_hl" }
+  -- use { "christianchiarulli/nvim-gps", branch = "text_hl" }
+  use {
+    "SmiteshP/nvim-navic",
+    requires = "neovim/nvim-lspconfig",
+  }
   use "tversteeg/registers.nvim"
   use "rcarriga/nvim-notify"
   use "kyazdani42/nvim-web-devicons"
@@ -154,7 +158,7 @@ return packer.startup(function(use)
   use "mfussenegger/nvim-jdtls"
 
   -- Rust
-  use { "christianchiarulli/rust-tools.nvim", branch = "handler_nil_check" }
+  use { "simrat39/rust-tools.nvim", branch = "modularize_and_inlay_rewrite" }
   use "Saecki/crates.nvim"
 
   -- Typescript TODO: set this up, also add keybinds to ftplugin

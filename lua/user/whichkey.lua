@@ -90,23 +90,27 @@ local m_opts = {
 local m_mappings = {
   a = { "<cmd>silent BookmarkAnnotate<cr>", "Annotate" },
   c = { "<cmd>silent BookmarkClear<cr>", "Clear" },
-  m = { "<cmd>silent BookmarkToggle<cr>", "Toggle" },
-  h = { '<cmd>lua require("harpoon.mark").add_file()<cr>', "Harpoon" },
+  t = { "<cmd>silent BookmarkToggle<cr>", "Toggle" },
+  m = { '<cmd>lua require("harpoon.mark").add_file()<cr>', "Harpoon" },
+  ["."] = { '<cmd>lua require("harpoon.ui").nav_next()<cr>', "Harpoon Next" },
+  [","] = { '<cmd>lua require("harpoon.ui").nav_prev()<cr>', "Harpoon Prev" },
+  l = { "<cmd>lua require('user.bfs').open()<cr>", "Buffers" },
   j = { "<cmd>silent BookmarkNext<cr>", "Next" },
+  s = { "<cmd>Telescope harpoon marks<cr>", "Search Files" },
   k = { "<cmd>silent BookmarkPrev<cr>", "Prev" },
-  s = { "<cmd>silent BookmarkShowAll<cr>", "Prev" },
+  S = { "<cmd>silent BookmarkShowAll<cr>", "Prev" },
   -- s = {
   --   "<cmd>lua require('telescope').extensions.vim_bookmarks.all({ hide_filename=false, prompt_title=\"bookmarks\", shorten_path=false })<cr>",
   --   "Show",
   -- },
   x = { "<cmd>BookmarkClearAll<cr>", "Clear All" },
-  u = { '<cmd>lua require("harpoon.ui").toggle_quick_menu()<cr>', "Harpoon UI" },
+  [";"] = { '<cmd>lua require("harpoon.ui").toggle_quick_menu()<cr>', "Harpoon UI" },
 }
 
 local mappings = {
-  ["a"] = { "<cmd>Alpha<cr>", "Alpha" },
-  -- b = { "<cmd>lua require('user.bfs').open()<cr>", "Buffers" },
-  b = { "<cmd>JABSOpen<cr>", "Buffers" },
+  ["a"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Action" },
+  b = { "<cmd>lua require('user.bfs').open()<cr>", "Buffers" },
+  -- b = { "<cmd>JABSOpen<cr>", "Buffers" },
   -- ["b"] = {
   --   "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
   --   "Buffers",
@@ -165,11 +169,11 @@ local mappings = {
 
   s = {
     name = "Session",
-    s = { "<silent><cmd>SaveSession<cr>", "Save" },
-    r = { "<silent><cmd>RestoreSession<cr>", "Restore" },
-    x = { "<silent><cmd>DeleteSession<cr>", "Delete" },
-    f = { "<silent><cmd>Autosession search<cr>", "Find" },
-    d = { "<silent><cmd>Autosession delete<cr>", "Find Delete" },
+    s = { "<cmd>SaveSession<cr>", "Save" },
+    r = { "<cmd>RestoreSession<cr>", "Restore" },
+    x = { "<cmd>DeleteSession<cr>", "Delete" },
+    f = { "<cmd>Autosession search<cr>", "Find" },
+    d = { "<cmd>Autosession delete<cr>", "Find Delete" },
     -- a = { ":SaveSession<cr>", "test" },
     -- a = { ":RestoreSession<cr>", "test" },
     -- a = { ":RestoreSessionFromFile<cr>", "test" },
