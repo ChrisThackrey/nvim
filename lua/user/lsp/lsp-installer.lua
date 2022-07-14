@@ -4,7 +4,7 @@ if not status_ok then
 end
 
 local servers = {
-  "astrols",
+  "astro",
   "cssls",
   "cssmodules_ls",
   "emmet_ls",
