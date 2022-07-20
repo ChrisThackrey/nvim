@@ -10,7 +10,7 @@ return {
     end,
     inlay_hints = {
       -- Only show inlay hints for the current line
-      only_current_line = false,
+      only_current_line = true,
 
       -- Event which triggers a refersh of the inlay hints.
       -- You can make this "CursorMoved" or "CursorMoved,CursorMovedI" but
@@ -66,7 +66,7 @@ return {
         $ chmod +x ~/.local/bin/rust-analyzer
     --]]
     -- cmd = { os.getenv "HOME" .. "/.local/bin/rust-analyzer" },
-    cmd = { "rustup", "run", "nightly", os.getenv "HOME" .. "/usr/local/bin/rust-analyzer" },
+    cmd = { "rustup", "run", "nightly", os.getenv "HOME" .. "/.local/bin/rust-analyzer" },
     on_attach = require("user.lsp.handlers").on_attach,
     capabilities = require("user.lsp.handlers").capabilities,
 
@@ -82,3 +82,41 @@ return {
     },
   },
 }
+-- return {
+--   settings = {
+--     rust_analyzer = {
+--       inlayHints = {
+--         bindingModeHints = {
+--           enable = true,
+--         },
+--         typeHints = {
+--           enable = true,
+--           hideClosureInitialization = false,
+--           hideNamedConstructor = false,
+--         },
+--         chainingHints = {
+--           enable = true,
+--         },
+--         closingBraceHints = {
+--           enable = true,
+--           minLines = 25,
+--         },
+--         closureReturnTypeHints = {
+--           enable = "never",
+--         },
+--         lifetimeElisionHints = {
+--           enable = "never",
+--           useParameterNames = false,
+--           maxLength = 25,
+--         },
+--         parameterHints = {
+--           enable = true,
+--         },
+--         reborrowHints = {
+--           enable = "never",
+--         },
+--         renderColons = true,
+--       },
+--     },
+--   },
+-- }

@@ -1,36 +1,43 @@
 return {
-	settings = {
-      Lua = {
-        diagnostics = {
-          globals = {
-            -- vim
-            "vim",
-
-            -- Busted
-            "describe",
-            "it",
-            "before_each",
-            "after_each",
-            "teardown",
-            "pending",
-            "clear",
-
-            -- Colorbuddy
-            "Color",
-            "c",
-            "Group",
-            "g",
-            "s",
-
-            -- Custom
-            "RELOAD",
-          },
-        },
-
-        workspace = {
-          -- Make the server aware of Neovim runtime files
-          library = vim.api.nvim_get_runtime_file("", true),
+  settings = {
+    Lua = {
+      type = {
+        -- weakUnionCheck = true,
+        -- weakNilCheck = true,
+        -- castNumberToInteger = true,
+      },
+      format = {
+        enable = false,
+      },
+      hint = {
+        enable = true,
+        arrayIndex = "Disable", -- "Enable", "Auto", "Disable"
+        await = true,
+        paramName = "Disable", -- "All", "Literal", "Disable"
+        paramType = false,
+        semicolon = "Disable", -- "All", "SameLine", "Disable"
+        setType = true,
+      },
+      -- spell = {"the"}
+      runtime = {
+        version = "LuaJIT",
+        special = {
+          reload = "require",
         },
       },
+      diagnostics = {
+        globals = { "vim" },
+      },
+      workspace = {
+        library = {
+          [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+          [vim.fn.stdpath "config" .. "/lua"] = true,
+          -- [vim.fn.datapath "config" .. "/lua"] = true,
+        },
+      },
+      telemetry = {
+        enable = false,
+      },
     },
-  }
+  },
+}

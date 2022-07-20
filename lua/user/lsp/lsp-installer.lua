@@ -12,8 +12,10 @@ local servers = {
   "jdtls",
   "jsonls",
   "solc",
+  "solidity_ls",
   "sumneko_lua",
   "tflint",
+  "terraformls",
   "tsserver",
   "pyright",
   "yamlls",
@@ -21,6 +23,7 @@ local servers = {
   "clangd",
   "rust_analyzer",
   "taplo",
+  "zk@v0.10.1",
 }
 
 local settings = {
@@ -56,6 +59,8 @@ for _, server in pairs(servers) do
     capabilities = require("user.lsp.handlers").capabilities,
   }
 
+  server = vim.split(server, "@")[1]
+
   if server == "jsonls" then
     local jsonls_opts = require "user.lsp.settings.jsonls"
     opts = vim.tbl_deep_extend("force", jsonls_opts, opts)
@@ -69,6 +74,11 @@ for _, server in pairs(servers) do
   if server == "sumneko_lua" then
     local sumneko_opts = require "user.lsp.settings.sumneko_lua"
     opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
+  end
+
+  if server == "tsserver" then
+    local tsserver_opts = require "user.lsp.settings.tsserver"
+    opts = vim.tbl_deep_extend("force", tsserver_opts, opts)
   end
 
   if server == "pyright" then
@@ -86,13 +96,18 @@ for _, server in pairs(servers) do
     opts = vim.tbl_deep_extend("force", emmet_ls_opts, opts)
   end
 
+  if server == "zk" then
+    local zk_opts = require "user.lsp.settings.zk"
+    opts = vim.tbl_deep_extend("force", zk_opts, opts)
+  end
+
   if server == "jdtls" then
     goto continue
   end
 
   if server == "rust_analyzer" then
     local rust_opts = require "user.lsp.settings.rust"
-
+    -- opts = vim.tbl_deep_extend("force", rust_opts, opts)
     local rust_tools_status_ok, rust_tools = pcall(require, "rust-tools")
     if not rust_tools_status_ok then
       return
