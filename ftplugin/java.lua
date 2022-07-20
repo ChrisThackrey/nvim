@@ -2,6 +2,15 @@ vim.opt_local.shiftwidth = 2
 vim.opt_local.tabstop = 2
 vim.opt_local.cmdheight = 2 -- more space in the neovim command line for displaying messages
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+local status_cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+if not status_cmp_ok then
+  return
+end
+capabilities.textDocument.completion.completionItem.snippetSupport = false
+capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+
 local status, jdtls = pcall(require, "jdtls")
 if not status then
   return
@@ -96,7 +105,7 @@ local config = {
   },
 
   on_attach = require("user.lsp.handlers").on_attach,
-  capabilities = require("user.lsp.handlers").capabilities,
+  capabilities = capabilities,
 
   -- 💀
   -- This is the default if not provided, you can remove it. Or adjust as needed.
@@ -131,6 +140,11 @@ local config = {
       },
       references = {
         includeDecompiledSources = true,
+      },
+      inlayHints = {
+        parameterNames = {
+          enabled = "all", -- literals, all, none
+        },
       },
       format = {
         enabled = false,
@@ -224,7 +238,7 @@ local vopts = {
 }
 
 local mappings = {
-  j = {
+  L = {
     name = "Java",
     o = { "<Cmd>lua require'jdtls'.organize_imports()<CR>", "Organize Imports" },
     v = { "<Cmd>lua require('jdtls').extract_variable()<CR>", "Extract Variable" },
@@ -236,7 +250,7 @@ local mappings = {
 }
 
 local vmappings = {
-  j = {
+  L = {
     name = "Java",
     v = { "<Esc><Cmd>lua require('jdtls').extract_variable(true)<CR>", "Extract Variable" },
     c = { "<Esc><Cmd>lua require('jdtls').extract_constant(true)<CR>", "Extract Constant" },
