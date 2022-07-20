@@ -153,12 +153,14 @@ return packer.startup(function(use)
   -- TODO: set this up
   -- use "rmagatti/goto-preview"
   use "nvim-lua/lsp_extensions.nvim"
+  -- use "christianchiarulli/lsp-inlay-hints"
+  use {"christianchiarulli/lsp-inlayhints.nvim", branch="user-config"}
 
   -- Java
   use "mfussenegger/nvim-jdtls"
 
   -- Rust
-  use { "simrat39/rust-tools.nvim", branch = "modularize_and_inlay_rewrite" }
+  use { "christianchiarulli/rust-tools.nvim", branch = "modularize_and_inlay_rewrite" }
   use "Saecki/crates.nvim"
 
   -- Typescript TODO: set this up, also add keybinds to ftplugin
@@ -186,9 +188,9 @@ return packer.startup(function(use)
   use "mattn/webapi-vim"
 
   -- DAP
-  -- use "mfussenegger/nvim-dap"
+  use "mfussenegger/nvim-dap"
   -- use "theHamsta/nvim-dap-virtual-text"
-  -- use "rcarriga/nvim-dap-ui"
+  use "rcarriga/nvim-dap-ui"
   -- use "Pocco81/DAPInstall.nvim"
 
   -- Plugin Graveyard

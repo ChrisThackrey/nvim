@@ -7,7 +7,7 @@ local term_opts = { silent = true }
 local keymap = vim.api.nvim_set_keymap
 
 --Remap space as leader key
-keymap("", "<Space>", "<Nop>", opts)
+keymap("n", "<Space>", "", opts)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 keymap("n", "<C-Space>", "<cmd>WhichKey \\<leader><cr>", opts)
@@ -29,7 +29,7 @@ keymap("n", "<m-k>", "<C-w>k", opts)
 keymap("n", "<m-l>", "<C-w>l", opts)
 
 -- Tabs --
-keymap("n", "<enter>", ":tabnew %<cr>", opts)
+keymap("n", "<m-t>", ":tabnew %<cr>", opts)
 keymap("n", "<s-enter>", ":tabclose<cr>", opts)
 keymap("n", "<m-\\>", ":tabonly<cr>", opts)
 
@@ -131,7 +131,7 @@ vim.api.nvim_set_keymap("n", "=", "<cmd>JABSOpen<cr>", { noremap = true, silent 
 -- alt binds
 -- keymap("n", "<m-s>", "<cmd>split<cr>", opts)
 keymap("n", "<m-v>", "<cmd>vsplit<cr>", opts)
-keymap("n", "<m-q>", "<cmd>:q<cr>", opts)
+-- keymap("n", "<m-q>", "<cmd>:q<cr>", opts)
 
 M.show_documentation = function()
   local filetype = vim.bo.filetype
@@ -160,13 +160,26 @@ vim.api.nvim_set_keymap(
 keymap("n", "<m-/>", "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", opts)
 keymap("x", "<m-/>", '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>', opts)
 
-vim.api.nvim_set_keymap(
-  "n",
-  "<tab>",
-  "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
-  opts
-)
+-- vim.api.nvim_set_keymap(
+--   "n",
+--   "<tab>",
+--   "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
+--   opts
+-- )
+vim.api.nvim_set_keymap("n", "<tab>", "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", opts)
 vim.api.nvim_set_keymap("n", "<m-g>", "<cmd>Telescope git_branches<cr>", opts)
 -- l = { "<cmd>lua require('user.bfs').open()<cr>", "Buffers" },
+
+vim.cmd [[
+  function! QuickFixToggle()
+    if empty(filter(getwininfo(), 'v:val.quickfix'))
+      copen
+    else
+      cclose
+    endif
+  endfunction
+]]
+
+keymap("n", "<m-q>", ":call QuickFixToggle()<cr>", opts)
 
 return M

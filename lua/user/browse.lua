@@ -8,9 +8,10 @@ browse.setup {
 }
 
 local bookmarks = {
-  "https://doc.rust-lang.org/book/ch10-00-generics.html",
-  "https://github.com/ChrisThackrey",
+  "https://www.chrisatmachine.com/",
+  "https://github.com/christianchiarulli",
   "https://github.com/rockerBOO/awesome-neovim",
+  "https://signin.aws.amazon.com/signin",
   "https://doc.rust-lang.org/book/",
   "https://aur.archlinux.org/packages/",
   "https://news.ycombinator.com/",

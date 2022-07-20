@@ -30,6 +30,7 @@ local setup = {
     -- override the label used to display some keys. It doesn't effect WK in any other way.
     -- For example:
     -- ["<space>"] = "SPC",
+    ["<leader>"] = "SPC",
     -- ["<cr>"] = "RET",
     -- ["<tab>"] = "TAB",
   },
@@ -90,7 +91,7 @@ local m_opts = {
 local m_mappings = {
   a = { "<cmd>silent BookmarkAnnotate<cr>", "Annotate" },
   c = { "<cmd>silent BookmarkClear<cr>", "Clear" },
-  t = { "<cmd>silent BookmarkToggle<cr>", "Toggle" },
+  b = { "<cmd>silent BookmarkToggle<cr>", "Toggle" },
   m = { '<cmd>lua require("harpoon.mark").add_file()<cr>', "Harpoon" },
   ["."] = { '<cmd>lua require("harpoon.ui").nav_next()<cr>', "Harpoon Next" },
   [","] = { '<cmd>lua require("harpoon.ui").nav_prev()<cr>', "Harpoon Prev" },
@@ -109,7 +110,11 @@ local m_mappings = {
 
 local mappings = {
   ["a"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Action" },
-  b = { "<cmd>lua require('user.bfs').open()<cr>", "Buffers" },
+  -- b = { "<cmd>lua require('user.bfs').open()<cr>", "Buffers" },
+  b = {
+    "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false, initial_mode='normal'})<cr>",
+    "Find files",
+  },
   -- b = { "<cmd>JABSOpen<cr>", "Buffers" },
   -- ["b"] = {
   --   "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
@@ -260,6 +265,7 @@ local mappings = {
   l = {
     name = "LSP",
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
+    c = { "<cmd>lua require('user.lsp').server_capabilities()<cr>", "Get Capabilities" },
     d = { "<cmd>TroubleToggle<cr>", "Diagnostics" },
     w = {
       "<cmd>Telescope lsp_workspace_diagnostics<cr>",
