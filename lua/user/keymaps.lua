@@ -30,7 +30,7 @@ keymap("n", "<m-l>", "<C-w>l", opts)
 
 -- Tabs --
 keymap("n", "<m-t>", ":tabnew %<cr>", opts)
-keymap("n", "<s-enter>", ":tabclose<cr>", opts)
+keymap("n", "<m-y>", ":tabclose<cr>", opts)
 keymap("n", "<m-\\>", ":tabonly<cr>", opts)
 
 -- Resize with arrows
@@ -75,6 +75,7 @@ keymap("v", ">", ">gv", opts)
 -- keymap("v", "<A-j>", ":m .+1<CR>==", opts)
 -- keymap("v", "<A-k>", ":m .-2<CR>==", opts)
 keymap("v", "p", '"_dP', opts)
+-- keymap("v", "P", '"_dP', opts)
 
 -- Visual Block --
 -- Move text up and down
@@ -91,7 +92,7 @@ keymap("v", "p", '"_dP', opts)
 -- keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
 -- Custom
-keymap("n", "<esc><esc>", "<cmd>nohlsearch<cr>", opts)
+keymap("n", "<c-h>", "<cmd>nohlsearch<cr>", opts)
 -- NOTE: the fact that tab and ctrl-i are the same is stupid
 -- keymap("n", "<TAB>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
 keymap("n", "Q", "<cmd>Bdelete!<CR>", opts)
@@ -130,7 +131,7 @@ vim.api.nvim_set_keymap("n", "=", "<cmd>JABSOpen<cr>", { noremap = true, silent 
 
 -- alt binds
 -- keymap("n", "<m-s>", "<cmd>split<cr>", opts)
-keymap("n", "<m-v>", "<cmd>vsplit<cr>", opts)
+keymap("n", "<m-v>", "<cmd>lua require('lsp_lines').toggle()<cr>", opts)
 -- keymap("n", "<m-q>", "<cmd>:q<cr>", opts)
 
 M.show_documentation = function()
@@ -150,12 +151,12 @@ vim.api.nvim_set_keymap("n", "K", ":lua require('user.keymaps').show_documentati
 -- vim.api.nvim_set_keymap("n", "<m-b>", "<cmd>lua require('user.bfs').open()<cr>", opts)
 -- vim.api.nvim_set_keymap("n", "<m-b>", "<cmd>JABSOpen<cr>", opts)
 -- vim.api.nvim_set_keymap("n", "<m-e>", "NvimTreeToggle<cr>", opts)
-vim.api.nvim_set_keymap(
-  "n",
-  "<m-f>",
-  "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
-  opts
-)
+-- vim.api.nvim_set_keymap(
+--   "n",
+--   "<m-f>",
+--   "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
+--   opts
+-- )
 -- Comment
 keymap("n", "<m-/>", "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", opts)
 keymap("x", "<m-/>", '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>', opts)
@@ -166,8 +167,15 @@ keymap("x", "<m-/>", '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vi
 --   "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
 --   opts
 -- )
-vim.api.nvim_set_keymap("n", "<tab>", "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", opts)
+
+-- vim.api.nvim_set_keymap("n", "<tab>", "<cmd>lua require('telescope.builtin').extensions.harpoon.marks(require('telescope.themes').get_dropdown{previewer = false, initial_mode='normal'})<cr>", opts)
+
+
+vim.api.nvim_set_keymap("n", "<tab>", "<cmd>lua require('telescope').extensions.harpoon.marks(require('telescope.themes').get_dropdown{previewer = false, initial_mode='normal', prompt_title='Harpoon'})<cr>", opts)
+vim.api.nvim_set_keymap("n", "<s-tab>", "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false, initial_mode='normal'})<cr>", opts)
+-- vim.api.nvim_set_keymap("n", "<tab>", "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", opts)
 vim.api.nvim_set_keymap("n", "<m-g>", "<cmd>Telescope git_branches<cr>", opts)
+vim.api.nvim_set_keymap("n", "<s-enter>", "<cmd>TodoQuickFix<cr>", opts)
 -- l = { "<cmd>lua require('user.bfs').open()<cr>", "Buffers" },
 
 vim.cmd [[
@@ -181,5 +189,8 @@ vim.cmd [[
 ]]
 
 keymap("n", "<m-q>", ":call QuickFixToggle()<cr>", opts)
+keymap("n", "<c-l>", "<cmd>lua vim.lsp.codelens.run()<cr>", opts)
+
+    -- l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
 
 return M

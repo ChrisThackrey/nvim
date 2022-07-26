@@ -42,13 +42,18 @@ local Terminal = require("toggleterm.terminal").Terminal
 local lazygit = Terminal:new {
   cmd = "lazygit",
   hidden = true,
-  direction = "tab",
+  direction = "float",
+  float_opts = {
+    border = "none",
+    width = 100000,
+    height = 100000,
+  },
   on_open = function(_)
     vim.cmd "startinsert!"
-    vim.cmd "set laststatus=0"
+    -- vim.cmd "set laststatus=0"
   end,
   on_close = function(_)
-    vim.cmd "set laststatus=3"
+    -- vim.cmd "set laststatus=3"
   end,
   count = 99,
 }

@@ -49,15 +49,28 @@ cmp.setup {
     ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
     ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
     ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+    ["<m-o>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
     -- ["<C-y>"] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
     ["<C-c>"] = cmp.mapping {
+      i = cmp.mapping.abort(),
+      c = cmp.mapping.close(),
+    },
+    ["<m-j>"] = cmp.mapping {
+      i = cmp.mapping.abort(),
+      c = cmp.mapping.close(),
+    },
+    ["<m-k>"] = cmp.mapping {
+      i = cmp.mapping.abort(),
+      c = cmp.mapping.close(),
+    },
+    ["<m-c>"] = cmp.mapping {
       i = cmp.mapping.abort(),
       c = cmp.mapping.close(),
     },
     -- Accept currently selected item. If none selected, `select` first item.
     -- Set `select` to `false` to only confirm explicitly selected items.
     ["<CR>"] = cmp.mapping.confirm { select = true },
-    ["<Right>"] = cmp.mapping.confirm { select = true },
+    -- ["<Right>"] = cmp.mapping.confirm { select = true },
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -129,7 +142,19 @@ cmp.setup {
   },
   sources = {
     { name = "crates", group_index = 1 },
-    { name = "nvim_lsp", group_index = 2 },
+    -- { name = "nvim_lsp", group_index = 2 },
+    {
+      name = "nvim_lsp",
+      filter = function(entry, ctx)
+        -- vim.pretty_print()
+        local kind = require("cmp.types.lsp").CompletionItemKind[entry:get_kind()]
+        -- vim.bo.filetype
+        if kind == "Snippet" and ctx.prev_context.filetype == "java" then
+          return true
+        end
+      end,
+      group_index = 2,
+    },
     { name = "nvim_lua", group_index = 2 },
     { name = "copilot", group_index = 2 },
     { name = "luasnip", group_index = 2 },
@@ -162,10 +187,11 @@ cmp.setup {
     select = false,
   },
   window = {
-    documentation = {
-      border = "rounded",
-      winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None",
-    },
+    documentation = false,
+    -- documentation = {
+    --   border = "rounded",
+    --   winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None",
+    -- },
     completion = {
       border = "rounded",
       winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None",
