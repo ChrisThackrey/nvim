@@ -9,12 +9,17 @@ if not status_ok_1 then
 end
 
 local servers = {
+  "astro",
   "cssls",
   "cssmodules_ls",
+  "dockerls",
   "emmet_ls",
+  "gopls",
+  "graphql",
   "html",
   "jdtls",
   "jsonls",
+  "prismals",
   "solc",
   "solidity_ls",
   "sumneko_lua",
@@ -26,8 +31,11 @@ local servers = {
   "bashls",
   "clangd",
   "rust_analyzer",
+  "tailwindcss",
   "taplo",
+  "texlab",
   "zk@v0.10.1",
+  "zls",
   "lemminx"
 }
 
