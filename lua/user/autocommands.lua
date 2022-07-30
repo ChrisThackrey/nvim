@@ -17,7 +17,18 @@ vim.api.nvim_create_autocmd({ "User" }, {
 })
 
 vim.api.nvim_create_autocmd({ "FileType" }, {
-  pattern = { "Jaq", "qf", "help", "man", "lspinfo", "spectre_panel", "lir", "DressingSelect", "tsplayground" },
+  pattern = {
+    "Jaq",
+    "qf",
+    "help",
+    "man",
+    "lspinfo",
+    "spectre_panel",
+    "lir",
+    "DressingSelect",
+    "tsplayground",
+    "Markdown",
+  },
   callback = function()
     vim.cmd [[
       nnoremap <silent> <buffer> q :close<CR> 
@@ -50,6 +61,20 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
       set nobuflisted 
     ]]
     end
+  end,
+})
+
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+  pattern = { "" },
+  callback = function()
+    local get_project_dir = function()
+      local cwd = vim.fn.getcwd()
+      local project_dir = vim.split(cwd, "/")
+      local project_name = project_dir[#project_dir]
+      return project_name
+    end
+
+    vim.opt.titlestring = get_project_dir()
   end,
 })
 
@@ -106,7 +131,10 @@ if vim.fn.has "nvim-0.8" == 1 then
     { "CursorMoved", "CursorHold", "BufWinEnter", "BufFilePost", "InsertEnter", "BufWritePost", "TabClosed" },
     {
       callback = function()
-        require("user.winbar").get_winbar()
+        local status_ok, _ = pcall(vim.api.nvim_buf_get_var, 0, "lsp_floating_window")
+        if not status_ok then
+          require("user.winbar").get_winbar()
+        end
       end,
     }
   )
@@ -166,3 +194,10 @@ vim.api.nvim_create_autocmd({ "CursorHold" }, {
 --     end
 --   end,
 -- })
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  pattern = { "*.ts" },
+  callback = function()
+    vim.lsp.buf.format { async = true }
+  end,
+})

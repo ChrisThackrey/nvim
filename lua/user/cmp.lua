@@ -128,6 +128,11 @@ cmp.setup {
         vim_item.kind_hl_group = "CmpItemKindCrate"
       end
 
+      if entry.source.name == "lab.quick_data" then
+        vim_item.kind = icons.misc.CircuitBoard
+        vim_item.kind_hl_group = "CmpItemKindConstant"
+      end
+
       -- NOTE: order matters
       vim_item.menu = ({
         nvim_lsp = "",
@@ -156,12 +161,13 @@ cmp.setup {
       group_index = 2,
     },
     { name = "nvim_lua", group_index = 2 },
-    { name = "copilot", group_index = 2 },
+    { name = "copilot", keyword_length = 1, group_index = 2 },
     { name = "luasnip", group_index = 2 },
     { name = "buffer", group_index = 2 },
     { name = "cmp_tabnine", group_index = 2 },
     { name = "path", group_index = 2 },
     { name = "emoji", group_index = 2 },
+    { name = "lab.quick_data", keyword_length = 4, group_index = 2 },
   },
   sorting = {
     priority_weight = 2,
