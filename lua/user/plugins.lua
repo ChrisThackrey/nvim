@@ -51,6 +51,7 @@ return packer.startup(function(use)
   -- Lua Development
   use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
   use "nvim-lua/popup.nvim"
+  use "MunifTanjim/nui.nvim"
   use "christianchiarulli/lua-dev.nvim"
   -- use "folke/lua-dev.nvim"
 
@@ -235,6 +236,18 @@ return packer.startup(function(use)
     "iamcco/markdown-preview.nvim",
     run = "cd app && npm install",
     ft = "markdown",
+  }
+
+  -- Minimap
+  use { "wfxr/minimap.vim",
+	branch = "master",
+	requires = {
+		{ "nvim-lua/plenary.nvim" },
+		{ "MunifTanjim/nui.nvim" },
+		{ "neovim/nvim-lspconfig" },
+		{ "nvim-treesitter/nvim-treesitter" },
+		{ "kyazdani42/nvim-tree.lua" }
+	},
   }
 
   -- Graveyard

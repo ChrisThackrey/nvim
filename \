@@ -204,62 +204,51 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 		command = "setfiletype astro",
 	})
 
-	-- never want to be in the minimap window or buffer.
-	-- https://github.com/wfxr/minimap.vim/issues/106
- 	vim.api.nvim_create_autocmd("WinEnter", {
- 	 	pattern = "*",
-	 	callback = function()
-			local mmwinnr = vim.fn.bufwinnr("-MINIMAP-")
-
-			if mmwinnr == -1 then
-				return
-			end
-
-			if vim.fn.winnr() == mmwinnr then
-				-- Go to the other window.
-				vim.api.nvim_command("wincmd t")
-			end
-	 	end
- 	})
-
-	vim.api.nvim_create_autocmd({ "QuitPre" }, {
-	 	pattern = "*",
-	 	callback = function()
-		 	vim.api.nvim_command("MinimapClose")
-	 	end
-	})
-
 	-- MiniMap Highlights
 	vim.api.nvim_create_augroup("_setMapHl", { clear = true })
 	vim.api.nvim_create_autocmd("BufWinEnter", {
 		group = "_setMapHl",
 		pattern = "*",
 		command = [[
-		     highlight minimapCursor ctermbg=59 ctermfg=228 guibg=#CBE3E7 guifg=#1E1E2E |
-		     highlight minimapRange ctermbg=242 ctermfg=228 guibg=#585273 guifg=C9CBFF |
-		     highlight Search ctermbg=242 ctermfg=228 guibg=#3E3859 guifg=#F2B482 |
-		     highlight minimapDiffAdded ctermbg=242 ctermfg=228 guibg=#F5E0DC guifg=#1E1C31 |
-		     highlight minimapDiffRemoved ctermbg=242 ctermfg=228 guibg=#F48FB1 guifg=#3E3859 |
-		     highlight minimapDiffLine ctermbg=242 ctermfg=228 guibg=#1E1E2E guifg=#F5E0DC |
-		     highlight minimapCursorDiffAdded ctermbg=59 ctermfg=228 guibg=#CBE3E7 guifg=#1E1E2E |
-		     highlight minimapCursorDiffRemoved ctermbg=59 ctermfg=228 guibg=#CBE3E7 guifg=#1E1C31 |
-		     highlight minimapCursorDiffLine ctermbg=59 ctermfg=228 guibg=#CBE3E7 guifg=#1E1E2E |
-		     highlight minimapRangeDiffAdded ctermbg=242 ctermfg=228 guibg=#585273 guifg=#A6E3A1 |
-		     highlight minimapRangeDiffRemoved ctermbg=242 ctermfg=228 guibg=#585273 guifg=#F48FB1 |
-		     highlight minimapRangeDiffLine ctermbg=242 ctermfg=228 guibg=#585273 guifg=#F5E0DC
-		]],
+	     highlight minimapCursor ctermbg=59 ctermfg=228 guibg=#CBE3E7 guifg=#A1EFD3 |
+	     highlight minimapRange ctermbg=242 ctermfg=228 guibg=#585273 guifg=#A1EFD3
+	     highlight Search ctermbg=242 ctermfg=228 guibg=#3E3859 guifg=#F2B482
+	     highlight minimapDiffAdded ctermbg=242 ctermfg=228 guibg=#585273 guifg=#62D196
+	     highlight minimapDiffRemoved ctermbg=242 ctermfg=228 guibg=#585273 guifg=#2D2B40
+	     highlight minimapDiffLine ctermbg=242 ctermfg=228 guibg=#585273 guifg=#A37ACC
+	     highlight minimapCursorDiffAdded ctermbg=242 ctermfg=228 guibg=#CBE3E7 guifg=#A1EFD3
+	     highlight minimapCursorDiffRemoved ctermbg=242 ctermfg=228 guibg=#CBE3E7 guifg=#A1EFD3
+	     highlight minimapCursorDiffLine ctermbg=242 ctermfg=228 guibg=#CBE3E7 guifg=#A1EFD3
+	     highlight minimapRangeDiffAdded ctermbg=242 ctermfg=228 guibg=#585273 guifg=#D4BFFF
+	     highlight minimapRangeDiffRemoved ctermbg=242 ctermfg=228 guibg=#585273 guifg=#3E3859
+	     highlight minimapRangeDiffLine ctermbg=242 ctermfg=228 guibg=#585273 guifg=#A1EFD3
+	   ]],
 	})
 
 	-- restore cursor position
-	-- vim.api.nvim_create_autocmd("BufReadPost", {
-	-- 	callback = function()
-	-- 		local previous_pos = vim.api.nvim_buf_get_mark(0, '"')[1]
-	-- 		local last_line = vim.api.nvim_buf_line_count(0)
-	-- 		if previous_pos >= 1 and previous_pos <= last_line and vim.bo.filetype ~= "commit" then
-	-- 			vim.cmd('normal! g`"')
-	-- 		end
-	-- 	end,
-	-- })
+	vim.api.nvim_create_autocmd("BufReadPost", {
+		callback = function()
+			local previous_pos = vim.api.nvim_buf_get_mark(0, '"')[1]
+			local last_line = vim.api.nvim_buf_line_count(0)
+			if previous_pos >= 1 and previous_pos <= last_line and vim.bo.filetype ~= "commit" then
+				vim.cmd('normal! g`"')
+			end
+		end,
+	})
+
+	vim.api.nvim_create_augroup("cursorline_focus", {})
+	vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
+		group = "cursorline_focus",
+		callback = function()
+			vim.wo.cursorline = true
+		end,
+	})
+	vim.api.nvim_create_autocmd({ "InsertEnter", "WinLeave" }, {
+		group = "cursorline_focus",
+		callback = function()
+			vim.wo.cursorline = false
+		end,
+	})
 
 	-- Fixes Autocomment
 	vim.api.nvim_create_autocmd({ "BufWinEnter" }, {

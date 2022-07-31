@@ -21,6 +21,12 @@ keymap("n", "<C-i>", "<C-i>", opts)
 --   term_mode = "t",
 --   command_mode = "c",
 
+vim.keymap.set("n", "<leader>m", function()
+    vim.api.nvim_command("Minimap")
+    -- vim.api.nvim_command("MinimapToggle")
+    -- vim.api.nvim_command("MinimapRefresh")
+end, { desc = "Toggle Minimap" })
+
 -- Normal --
 -- Better window navigation
 keymap("n", "<m-h>", "<C-w>h", opts)
