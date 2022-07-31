@@ -240,14 +240,37 @@ return packer.startup(function(use)
 
   -- Minimap
   use { "wfxr/minimap.vim",
-	branch = "master",
-	requires = {
-		{ "nvim-lua/plenary.nvim" },
-		{ "MunifTanjim/nui.nvim" },
-		{ "neovim/nvim-lspconfig" },
-		{ "nvim-treesitter/nvim-treesitter" },
-		{ "kyazdani42/nvim-tree.lua" }
-	},
+	-- branch = "master",
+	-- requires = {
+	-- 	{ "nvim-lua/plenary.nvim" },
+	-- 	{ "MunifTanjim/nui.nvim" },
+	-- 	{ "neovim/nvim-lspconfig" },
+	-- 	{ "nvim-treesitter/nvim-treesitter" },
+	-- },
+	-- run = "cargo install --locked code-minimap",
+	opt = true,
+	event = "BufRead",
+	setup = function()
+		vim.g.minimap_width = 16
+		vim.g.minimap_auto_start = 1
+		-- vim.g.minimap_auto_start_win_enter = 1
+		vim.g.minimap_block_filetypes = {
+			"help",
+			"aerial",
+			"TelescopePrompt",
+			"TelescopeResults",
+			"NvimTree",
+			"dashboard",
+		}
+		vim.g.minimap_block_buftypes = {
+			"nofile",
+			"nowrite",
+		}
+		vim.g.minimap_git_colors = 1
+		-- vim.g.minimap_enable_highlight_colorgroup = 0
+		vim.g.minimap_highlight_range = 1
+		vim.g.minimap_highlight_search = 1
+	end,
   }
 
   -- Graveyard

@@ -196,7 +196,6 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
   end,
 })
 
--- Autogroups
 	vim.api.nvim_create_augroup("custom_filetypes", {})
 	vim.api.nvim_create_autocmd("BufWinEnter", {
 		group = "custom_filetypes",
@@ -204,9 +203,27 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 		command = "setfiletype astro",
 	})
 
+	-- restore cursor position
+	vim.api.nvim_create_autocmd("BufReadPost", {
+		callback = function()
+			local previous_pos = vim.api.nvim_buf_get_mark(0, '"')[1]
+			local last_line = vim.api.nvim_buf_line_count(0)
+			if previous_pos >= 1 and previous_pos <= last_line and vim.bo.filetype ~= "commit" then
+				vim.cmd('normal! g`"')
+			end
+		end,
+	})
+
+	-- Fixes Autocomment
+	vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+		callback = function()
+			vim.cmd("set formatoptions-=cro")
+		end,
+	})
+
 	-- never want to be in the minimap window or buffer.
 	-- https://github.com/wfxr/minimap.vim/issues/106
- 	vim.api.nvim_create_autocmd("WinEnter", {
+ 	vim.api.nvim_create_autocmd("BufWinEnter", {
  	 	pattern = "*",
 	 	callback = function()
 			local mmwinnr = vim.fn.bufwinnr("-MINIMAP-")
@@ -229,7 +246,7 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 	 	end
 	})
 
-	-- MiniMap Highlights
+	-- Minimap Highlights
 	vim.api.nvim_create_augroup("_setMapHl", { clear = true })
 	vim.api.nvim_create_autocmd("BufWinEnter", {
 		group = "_setMapHl",
@@ -248,22 +265,4 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 		     highlight minimapRangeDiffRemoved ctermbg=242 ctermfg=228 guibg=#585273 guifg=#F48FB1 |
 		     highlight minimapRangeDiffLine ctermbg=242 ctermfg=228 guibg=#585273 guifg=#F5E0DC
 		]],
-	})
-
-	-- restore cursor position
-	-- vim.api.nvim_create_autocmd("BufReadPost", {
-	-- 	callback = function()
-	-- 		local previous_pos = vim.api.nvim_buf_get_mark(0, '"')[1]
-	-- 		local last_line = vim.api.nvim_buf_line_count(0)
-	-- 		if previous_pos >= 1 and previous_pos <= last_line and vim.bo.filetype ~= "commit" then
-	-- 			vim.cmd('normal! g`"')
-	-- 		end
-	-- 	end,
-	-- })
-
-	-- Fixes Autocomment
-	vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
-		callback = function()
-			vim.cmd("set formatoptions-=cro")
-		end,
 	})

@@ -168,6 +168,7 @@ local filetype = {
     local ui_filetypes = {
       "help",
       "packer",
+      "minimap",
       "neogitstatus",
       "NvimTree",
       "Trouble",
@@ -285,6 +286,7 @@ local spaces = {
     local ui_filetypes = {
       "help",
       "packer",
+      "minimap",
       "neogitstatus",
       "NvimTree",
       "Trouble",
@@ -320,6 +322,7 @@ local lanuage_server = {
     local ui_filetypes = {
       "help",
       "packer",
+      "minimap",
       "neogitstatus",
       "NvimTree",
       "Trouble",
@@ -411,6 +414,25 @@ local location = {
   padding = 0,
 }
 
+local mini_sections = {
+	lualine_a = {},
+	lualine_b = {},
+	lualine_c = {},
+	lualine_x = {},
+	lualine_y = {},
+	lualine_z = { "location" },
+}
+
+local minimap = {
+	sections = mini_sections,
+	filetypes = { "minimap" },
+}
+
+local aerial = {
+	sections = mini_sections,
+	filetypes = { "aerial" },
+}
+
 lualine.setup {
   options = {
     globalstatus = true,
@@ -443,5 +465,12 @@ lualine.setup {
     lualine_z = {},
   },
   tabline = {},
-  extensions = {},
+  extensions = {
+	"quickfix",
+	"nvim-tree",
+	"toggleterm",
+	"fugitive",
+	minimap,
+	aerial,
+},
 }
