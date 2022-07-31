@@ -240,13 +240,6 @@ return packer.startup(function(use)
 
   -- Minimap
   use { "wfxr/minimap.vim",
-	-- branch = "master",
-	-- requires = {
-	-- 	{ "nvim-lua/plenary.nvim" },
-	-- 	{ "MunifTanjim/nui.nvim" },
-	-- 	{ "neovim/nvim-lspconfig" },
-	-- 	{ "nvim-treesitter/nvim-treesitter" },
-	-- },
 	-- run = "cargo install --locked code-minimap",
 	opt = true,
 	event = "BufRead",
@@ -263,6 +256,7 @@ return packer.startup(function(use)
 			"dashboard",
 		}
 		vim.g.minimap_block_buftypes = {
+			"help",
 			"nofile",
 			"nowrite",
 		}
