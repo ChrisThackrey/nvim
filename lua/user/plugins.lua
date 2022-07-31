@@ -211,11 +211,12 @@ return packer.startup(function(use)
   use "nacro90/numb.nvim"
   use "andymass/vim-matchup"
   use "folke/zen-mode.nvim"
+  -- use "Pocco81/true-zen.nvim"
   use "karb94/neoscroll.nvim"
   use "junegunn/vim-slash"
 
   -- Motion
-  use "christianchiarulli/hop.nvim"
+  use "phaazon/hop.nvim"
   -- use "jinh0/eyeliner.nvim"
 
   -- Keybinding
@@ -244,7 +245,7 @@ return packer.startup(function(use)
 	opt = true,
 	event = "BufRead",
 	setup = function()
-		vim.g.minimap_width = 16
+		vim.g.minimap_width = 14
 		vim.g.minimap_auto_start = 1
 		-- vim.g.minimap_auto_start_win_enter = 1
 		vim.g.minimap_block_filetypes = {
